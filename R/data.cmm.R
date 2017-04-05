@@ -1,7 +1,7 @@
 # MARSHALL (CENTER FOR SYSTEMIC PEACE) COUP DATA
 # 2015-04-29
 
-# Source: Center for Systemic Peace http://www.systemicpeace.org/inscr/CSPCoupsList2014.xls
+# Source: Center for Systemic Peace http://www.systemicpeace.org/inscr/CSPCoupsListv2015.xls
 
 # Clear workspace
 rm(list=ls(all=TRUE))
@@ -10,13 +10,13 @@ rm(list=ls(all=TRUE))
 wd <- getwd()
 
 # Load required packages and functions
-library(XLConnect)
+library('readxl')
 library(reshape)
-source(paste0(wd, "/r/f.pitfcodeit.r"))
-source(paste0(wd, "/r/f.countryyearrackit.r"))
+source(paste0(wd, "/R/f.pitfcodeit.R"))
+source(paste0(wd, "/R/f.countryyearrackit.R"))
 
 # Get the data, which is an event file (one row per event), not country-year
-csp <- readWorksheetFromFile(paste0(wd, "/data.in/cspcoupslist2014.xls"), sheet=1)
+csp <- read_excel("data.in/CSPCoupsListv2015.xls", sheet=1)
 
 # Cut down to the essentials
 csp <- subset(csp, is.na(scode)==FALSE, select=c(scode, year, success))

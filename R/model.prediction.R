@@ -16,10 +16,10 @@ library(dplyr)
 set.seed(20912)
 
 # Load the compiled and transformed data
-dat <- read.csv(paste0(wd, "/data.out/ewp.statrisk.data.transformed.csv"))
+dat <- read.csv("data.out/ewp.statrisk.data.transformed.csv")
 
 # Get model formulae
-source(paste0(wd, "/r/model.formulae.r"))
+source("R/model.formulae.R")
 
 ####################################
 # Model Estimation
