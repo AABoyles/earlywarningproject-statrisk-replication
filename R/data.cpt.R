@@ -11,8 +11,8 @@ wd <- getwd()
 
 # Load required packages and functions
 library(reshape)
-source(paste0(wd, "/r/f.pitfcodeit.r"))
-source(paste0(wd, "/r/f.countryyearrackit.r"))
+source("R/f.pitfcodeit.R")
+source("R/f.countryyearrackit.R")
 
 # Ingest raw data, which is event file (one row per event), not country-year, from URL
 cpt <- read.delim("http://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt")
