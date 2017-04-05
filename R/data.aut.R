@@ -12,10 +12,10 @@ wd <- getwd()
 # Load required packages and functions
 library(foreign)
 library(DataCombine)
-source(paste0(wd, "/r/f.pitfcodeit.r"))
+source(paste0(wd, "/R/f.pitfcodeit.R"))
 
 # Ingest the data
-aut <- read.dta(paste0(wd, "/data.in/gwftscs.dta"), convert.factors = FALSE, convert.underscore = TRUE)
+aut <- read.dta(paste0(wd, "/data.in/GWFtscs.dta"), convert.factors = FALSE, convert.underscore = TRUE)
 
 # Change names to get right prefix
 names(aut) <- c(names(aut)[1:2], "country", gsub("gwf", "aut", x = names(aut)[4:length(names(aut))], fixed = TRUE) )
