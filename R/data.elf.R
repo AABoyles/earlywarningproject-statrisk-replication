@@ -11,19 +11,19 @@ rm(list=ls(all=TRUE))
 wd <- getwd()
 
 # Load required packages and functions
-library(xlsx)
-source(paste0(wd, "/r/f.countryyearrackit.r"))
-source(paste0(wd, "/r/f.pitfcodeit.r"))
+library('readxl')
+source("R/f.countryyearrackit.R")
+source("R/f.pitfcodeit.R")
 
 # Ingest data
-elf <- read.xlsx(paste0(wd, "/data.in/fractionalization.xls"),
-  sheetName = "Fractionalization Measures", startRow = 4, endRow = 218, header = FALSE,
-  colClasses = c("character", "character", "numeric", "numeric", "numeric", "numeric"))
+elf <- read_excel("data.in/fractionalization.xls",
+  sheet = "Fractionalization Measures", skip = 3,
+  col_names = c("country", "source", "year", "elf.ethnic", "elf.language", "elf.religion"),
+  col_types = c("text", "text", "numeric", "numeric", "numeric", "numeric")
+  )[1:215,] %>%
+  select(-source)
 
 # Add names, fix types, cut source, round, and add PITF codes
-names(elf) <- c("country", "source", "year", "elf.ethnic", "elf.language", "elf.religion")
-elf$country <- as.character(elf$country)
-elf$source <- NULL
 elf$elf.ethnic <- round(elf$elf.ethnic, 2)
 elf$elf.language <- round(elf$elf.language, 2)
 elf$elf.religion <- round(elf$elf.religion, 2)
@@ -56,4 +56,4 @@ elf$elf.religion <- as.numeric(elf$elf.religion)
 rack <- merge(subset(pitfcodeit(countryyearrackit(1945,2014), "country"), select=c(sftgcode, year)), elf, all.x = TRUE)
 rack <- rack[order(rack$sftgcode, rack$year),]
 
-write.csv(rack, file = paste0(wd, "/data.out/elf.csv"), row.names = FALSE)
+write.csv(rack, file = "data.out/elf.csv", row.names = FALSE)
