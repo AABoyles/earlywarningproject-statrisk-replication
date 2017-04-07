@@ -11,16 +11,16 @@ rm(list=ls(all=TRUE))
 wd <- getwd()
 
 # Load requisite packages and functions
-require(xlsx)
+require(readxl)
 require(reshape)
-source(paste0(wd, "/r/f.pitfcodeit.r"))
-source(paste0(wd, "/r/f.countryyearrackit.r"))
+source("R/f.pitfcodeit.R")
+source("R/f.countryyearrackit.R")
 
 # Ingest and reshape data into desired country-year format
-fiw <- read.xlsx2(paste0(wd, "/data.in/Country Ratings and Status, 1973-2014 (FINAL).xls"),
-  sheetIndex = 1, startRow = 7, endRow = 212)
-fhyrs <- c(1972:1980,1982:2013)
-var_years <- expand.grid( x=c('PR', 'CL', 'Status'), y = fhyrs)
+fiw <- read_excel("data.in/FH_Country_and_Territory_Ratings_and_Statuses_1972-2016.xls",
+  sheet = 2, skip = 2)[1:212,]
+fhyrs <- c(1972:1980,1982:2016)
+var_years <- expand.grid(x=c('PR', 'CL', 'Status'), y = fhyrs)
 names(fiw) <- c('country', paste(var_years$x, var_years$y, sep = "_"))
 fiw_m <- melt(fiw, id = 'country')
 fiw_m <- cbind(fiw_m, colsplit(fiw_m$variable, "_", names = c('indicator', 'year')))
